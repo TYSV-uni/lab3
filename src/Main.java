@@ -20,9 +20,7 @@ public class Main
 
         while(true)
         {
-            ArrayList<Path> files = FileOperations.get_file_paths_from_folder(path);
-
-            switch (GetInput.get_int_in_range("""
+            int num = GetInput.get_int_in_range("""
                      
                      Main menu
                      1.Display available files
@@ -32,9 +30,23 @@ public class Main
                      5.Clear the folder
                      6.Handle files
                      7.Exit
-                     Enter:\s""", 1, 7))
+                     Enter:\s""", 1, 7);
+
+            if (!Files.exists(path))
+                try
+                {
+                    Files.createDirectory(path);
+                } catch (Exception e)
+                {
+                    System.out.println("Exception occurred: " + e);
+                }
+
+            ArrayList<Path> files = FileOperations.get_file_paths_from_folder(path);
+
+            switch (num)
             {
                 case 1:
+
                     System.out.println("\nAvailable files: ");
                     if (files.isEmpty())
                         System.out.println("\tNo files found");
