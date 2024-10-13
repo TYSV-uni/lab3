@@ -3,19 +3,19 @@ import java.nio.file.Path;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
-public class FileOperations
+interface FileOperations
 {
-    public static String get_name_wo_ext(Path path)
+    static String get_name_wo_ext(Path path)
     {
         return path.getFileName().toString().substring(0, path.getFileName().toString().lastIndexOf("."));
     }
 
-    public static String get_ext(Path path)
+    static String get_ext(Path path)
     {
         return path.getFileName().toString().substring(path.getFileName().toString().lastIndexOf("."));
     }
 
-    public static ArrayList<Path> get_file_paths_from_folder(Path folder)
+    static ArrayList<Path> get_file_paths_from_folder(Path folder)
     {
         ArrayList<Path> file_paths = new ArrayList<>();
         if (!Files.exists(folder))
@@ -35,7 +35,7 @@ public class FileOperations
         return file_paths;
     }
 
-    public static void add_file(Path folder, String name)
+    static void add_file(Path folder, String name)
     {
         if (!Files.exists(folder))
         {
@@ -59,7 +59,7 @@ public class FileOperations
 
     }
 
-    public static void delete_file(Path folder, String file_name)
+    static void delete_file(Path folder, String file_name)
     {
         if (!Files.exists(folder))
         {
@@ -84,7 +84,7 @@ public class FileOperations
     }
 
 
-    public static void create_test_files(Path folder)
+    static void create_test_files(Path folder)
     {
         String[] file_names ={"test_file.pdf", "test_file.txt", "test_file.png", "test_file.jpg", "test_file.bad_ext"};
 
@@ -117,7 +117,7 @@ public class FileOperations
 
     }
 
-    public static void clear_folder(Path folder)
+    static void clear_folder(Path folder)
     {
         if (!Files.exists(folder))
         {
@@ -146,7 +146,7 @@ public class FileOperations
 
 
 
-    public static boolean rename_file(Path path, String new_name)
+    static boolean rename_file(Path path, String new_name)
     {
         Path new_path = path.getParent().resolve(new_name + get_ext(path));
 

@@ -27,7 +27,7 @@ public class Main
                      2.Add a new file
                      3.Delete a file
                      4.Create test files
-                     5.Clear the folder
+                     5.Clear folder
                      6.Handle files
                      7.Exit
                      Enter:\s""", 1, 7);

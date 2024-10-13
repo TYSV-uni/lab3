@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
-public class GetInput
+interface GetInput
 {
-    public static String get_string(String prompt)
+    static String get_string(String prompt)
     {
         String x;
         Scanner sc = new Scanner(System.in);
@@ -20,7 +20,7 @@ public class GetInput
             }
     }
 
-    public static int get_int_in_range(String prompt, int min, int max)
+    static int get_int_in_range(String prompt, int min, int max)
     {
         int x;
         Scanner sc = new Scanner(System.in);
@@ -48,7 +48,7 @@ public class GetInput
             }
     }
 
-    public static double get_double_in_range(String prompt, double min, double max)
+    static double get_double_in_range(String prompt, double min, double max)
     {
         double x;
         Scanner sc = new Scanner(System.in);
