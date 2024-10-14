@@ -1,3 +1,4 @@
+import java.util.Collections;
 import java.nio.file.Path;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -42,7 +43,9 @@ public class Main
                     System.out.println("Exception occurred: " + e);
                 }
 
-            ArrayList<Path> files = FileOperations.get_file_paths_from_folder(path);
+            ArrayList<Path> files =  FileOperations.get_file_paths_from_folder(path);
+            Collections.sort(files);
+            Collections.reverse(files);
 
             switch (num)
             {
@@ -85,6 +88,10 @@ public class Main
                                 System.out.println("Invalid file name");
                             else
                                 FileOperations.delete_file(path, name);
+
+                            if (FileOperations.get_file_paths_from_folder(path).isEmpty())
+                                break;
+
                         }
 
                     break;

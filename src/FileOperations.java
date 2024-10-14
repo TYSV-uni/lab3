@@ -5,6 +5,11 @@ import java.util.ArrayList;
 
 interface FileOperations
 {
+    static boolean is_valid_file_name(String name)
+    {
+        return name.contains(".") && !name.endsWith(" ") && !name.substring(0, name.lastIndexOf(".")).endsWith(" ");
+    }
+
     static boolean is_valid_folder(Path folder)
     {
         if (!Files.exists(folder))
@@ -49,15 +54,27 @@ interface FileOperations
     {
         if (!is_valid_folder(folder))
             return;
+        if(!is_valid_file_name(name))
+        {
+            System.out.println("Invalid file name: " + name);
+            return;
+        }
+
+
+        Path path = folder.resolve(name);
+
+        int i = 2;
+        while (Files.exists(path))
+        {
+            String formatted_i = " (" + i + ")";
+            path = path.getParent().resolve(name.substring(0, name.lastIndexOf(".")) + formatted_i + get_ext(path));
+            i++;
+        }
 
         try
         {
-            Files.createFile(folder.resolve(name));
+            Files.createFile(path);
             System.out.println("File created successfully");
-        }
-        catch (java.nio.file.FileAlreadyExistsException e)
-        {
-            System.out.println("File " + name + " already exists");
         }
         catch (Exception e)
         {
@@ -96,20 +113,7 @@ interface FileOperations
         String[] file_names = {"test_file.pdf", "test_file.txt", "test_file.png", "test_file.jpg", "test_file.bad_ext"};
 
         for (String name : file_names)
-            try
-            {
-                Files.createFile(folder.resolve(name));
-                System.out.println("File " + name + " created successfully");
-            }
-            catch (java.nio.file.FileAlreadyExistsException e)
-            {
-                System.out.println("File " + name + " already exists");
-            }
-            catch (Exception e)
-            {
-                System.out.println("Exception occurred: " + e);
-                return;
-            }
+           add_file(folder, name);
 
     }
 
@@ -136,13 +140,18 @@ interface FileOperations
 
     static boolean rename_file(Path path, String new_name)
     {
-        Path new_path = path.getParent().resolve(new_name + get_ext(path));
+        if(!is_valid_file_name(new_name))
+        {
+            System.out.println("Invalid file name: " + new_name);
+            return false;
+        }
+        Path new_path = path.getParent().resolve(new_name);
 
         int i = 2;
         while (Files.exists(new_path))
         {
-            String formatted_i = "(" + i + ")";
-            new_path = new_path.getParent().resolve(new_name + formatted_i + get_ext(new_path));
+            String formatted_i = " (" + i + ")";
+            new_path = new_path.getParent().resolve(new_name.substring(0, new_name.lastIndexOf(".")) + formatted_i + get_ext(new_path));
             i++;
         }
 
