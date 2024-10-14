@@ -11,7 +11,8 @@ public class Main
             try
             {
                 Files.createDirectory(path);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 System.out.println("Exception occurred: " + e);
             }

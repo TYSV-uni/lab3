@@ -5,6 +5,18 @@ import java.util.ArrayList;
 
 interface FileOperations
 {
+    static boolean is_valid_folder(Path folder)
+    {
+        if (!Files.exists(folder))
+            System.out.println("Folder does not exist");
+        else if (!Files.isDirectory(folder))
+            System.out.println("Given directory isn't a folder");
+        else
+            return true;
+
+        return false;
+    }
+
     static String get_name_wo_ext(Path path)
     {
         return path.getFileName().toString().substring(0, path.getFileName().toString().lastIndexOf("."));
@@ -18,10 +30,8 @@ interface FileOperations
     static ArrayList<Path> get_file_paths_from_folder(Path folder)
     {
         ArrayList<Path> file_paths = new ArrayList<>();
-        if (!Files.exists(folder))
-            System.out.println("Folder does not exist");
-        else
-        {
+
+        if (is_valid_folder(folder))
             try(DirectoryStream<Path> stream = Files.newDirectoryStream(folder))
             {
                 for (Path x : stream)
@@ -31,17 +41,14 @@ interface FileOperations
             {
                 System.out.println("Exception occurred: " + e);
             }
-        }
+
         return file_paths;
     }
 
     static void add_file(Path folder, String name)
     {
-        if (!Files.exists(folder))
-        {
-            System.out.println("Folder does not exist");
+        if (!is_valid_folder(folder))
             return;
-        }
 
         try
         {
@@ -61,11 +68,8 @@ interface FileOperations
 
     static void delete_file(Path folder, String file_name)
     {
-        if (!Files.exists(folder))
-        {
-            System.out.println("Folder does not exist");
+        if (!is_valid_folder(folder))
             return;
-        }
 
         try
         {
@@ -86,18 +90,10 @@ interface FileOperations
 
     static void create_test_files(Path folder)
     {
-        String[] file_names ={"test_file.pdf", "test_file.txt", "test_file.png", "test_file.jpg", "test_file.bad_ext"};
+        if (!is_valid_folder(folder))
+            return;
 
-        if (!Files.exists(folder))
-        {
-            System.out.println("Folder does not exist");
-            return;
-        }
-        if (!Files.isDirectory(folder))
-        {
-            System.out.println("File is not a folder");
-            return;
-        }
+        String[] file_names = {"test_file.pdf", "test_file.txt", "test_file.png", "test_file.jpg", "test_file.bad_ext"};
 
         for (String name : file_names)
             try
@@ -119,16 +115,8 @@ interface FileOperations
 
     static void clear_folder(Path folder)
     {
-        if (!Files.exists(folder))
-        {
-            System.out.println("Folder does not exist");
+        if (!is_valid_folder(folder))
             return;
-        }
-        if (!Files.isDirectory(folder))
-        {
-            System.out.println("File is not a folder");
-            return;
-        }
 
         ArrayList<Path> file_paths = get_file_paths_from_folder(folder);
         for (Path x : file_paths)
