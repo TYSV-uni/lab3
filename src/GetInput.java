@@ -58,12 +58,12 @@ interface GetInput
             {
                 System.out.print(prompt);
                 x = Double.parseDouble(sc.nextLine());
-                if (!(x >= min))
+                if (!(x > min))
                 {
                     System.out.println("Input should be bigger than " + min);
                     continue;
                 }
-                else if (!(x <= max))
+                else if (!(x < max))
                 {
                     System.out.println("Input should be smaller than " + max);
                     continue;
